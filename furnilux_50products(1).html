@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FurniLux - Luxury Furniture & Interiors</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root{--gold:#a67c52;--gold-light:#c89b6d;--gold-dark:#7a5535;--cream:#f8f5f0;--cream2:#f1ece6;--dark:#1a1512;--dark2:#2c2318;--text:#3a2e24;--text-light:#7a6a5a;--shadow-card:0 4px 30px rgba(30,20,10,0.10);--radius:18px;--font-display:'Cormorant Garamond',serif;--font-body:'Jost',sans-serif;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--cream);color:var(--text);overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(166,124,82,0.06) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 90%,rgba(200,155,109,0.08) 0%,transparent 55%);pointer-events:none;z-index:0;}
+.cursor-glow{position:fixed;width:260px;height:260px;background:radial-gradient(circle,rgba(166,124,82,0.18),transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:9999;transition:0.08s ease;}
+.particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.particles span{position:absolute;background:rgba(166,124,82,0.25);border-radius:50%;animation:floatUp 14s linear infinite;}
+@keyframes floatUp{from{transform:translateY(100vh) scale(0);opacity:0.8;}to{transform:translateY(-8vh) scale(1.2);opacity:0;}}
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 60px;background:rgba(248,245,240,0.88);backdrop-filter:blur(18px);position:sticky;top:0;z-index:1000;border-bottom:1px solid rgba(166,124,82,0.12);box-shadow:0 4px 28px rgba(0,0,0,0.05);}
+.nav-brand{display:flex;flex-direction:column;}
+.nav-brand h1{font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--dark);letter-spacing:2px;line-height:1;}
+.nav-brand span{font-size:0.62rem;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+nav ul{display:flex;gap:8px;list-style:none;align-items:center;}
+nav ul li a{text-decoration:none;color:var(--text);font-size:0.82rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;border-radius:30px;transition:0.3s;}
+nav ul li a:hover{background:var(--gold);color:#fff;}
+.hero{position:relative;height:100vh;overflow:hidden;color:#fff;}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 1.2s ease-in-out;}
+.slide.active{opacity:1;}
+.slide::before{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(0,0,0,0.62) 0%,rgba(26,21,18,0.4) 60%,rgba(0,0,0,0.7) 100%);}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:780px;margin:auto;padding:0 30px;}
+.hero-badge{display:inline-block;font-size:0.7rem;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);border:1px solid rgba(200,155,109,0.5);padding:7px 20px;border-radius:30px;margin-bottom:22px;backdrop-filter:blur(8px);}
+.hero h2{font-family:var(--font-display);font-size:4.2rem;font-weight:600;line-height:1.15;background:linear-gradient(135deg,#fff 30%,#e6d3b3 70%,#c89b6d 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:18px;}
+.hero p{font-size:1.05rem;margin-bottom:32px;color:rgba(255,255,255,0.82);font-weight:300;letter-spacing:0.5px;}
+.hero-dots{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:10;display:flex;gap:10px;}
+.hero-dots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:0.3s;}
+.hero-dots span.active{background:var(--gold-light);width:28px;border-radius:6px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 32px;border:none;border-radius:50px;cursor:pointer;color:#fff;font-family:var(--font-body);font-weight:500;font-size:0.82rem;letter-spacing:1.5px;text-transform:uppercase;background:linear-gradient(135deg,var(--gold-dark),var(--gold),var(--gold-light));box-shadow:0 6px 24px rgba(166,124,82,0.38);transition:0.35s ease;text-decoration:none;}
+.btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 32px rgba(166,124,82,0.5);}
+.section{padding:80px 60px;position:relative;z-index:2;}
+.section-header{text-align:center;margin-bottom:50px;}
+.section-tag{display:inline-block;font-size:0.65rem;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.section h2{font-family:var(--font-display);font-size:2.6rem;font-weight:600;color:var(--dark);line-height:1.2;}
+.section h2 em{font-style:italic;color:var(--gold);}
+.divider{width:60px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-light));margin:16px auto 0;border-radius:2px;}
+.cat-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px;}
+.cat-tab{padding:9px 20px;border:1.5px solid rgba(166,124,82,0.25);background:rgba(255,255,255,0.7);border-radius:50px;cursor:pointer;font-family:var(--font-body);font-size:0.78rem;font-weight:500;color:var(--text-light);transition:0.25s;display:flex;align-items:center;gap:6px;}
+.cat-tab:hover,.cat-tab.active{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:0 4px 16px rgba(166,124,82,0.3);}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);transition:0.35s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;border:1px solid rgba(166,124,82,0.07);}
+.card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(30,20,10,0.16);}
+.card-img-wrap{position:relative;overflow:hidden;height:210px;}
+.card img{width:100%;height:100%;object-fit:cover;transition:0.6s ease;display:block;}
+.card:hover img{transform:scale(1.1);}
+.card-badge{position:absolute;top:12px;left:12px;background:rgba(26,21,18,0.75);color:#fff;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:20px;backdrop-filter:blur(6px);}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(26,21,18,0.55) 100%);opacity:0;transition:0.35s;}
+.card:hover .card-overlay{opacity:1;}
+.card-shine{position:absolute;top:0;left:-75%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.5),transparent);transform:skewX(-25deg);}
+.card:hover .card-shine{animation:shine 0.9s ease;}
+@keyframes shine{100%{left:130%;}}
+.card .info{padding:16px 16px 18px;}
+.card .info h3{font-family:var(--font-display);font-size:1.15rem;font-weight:600;color:var(--dark);margin-bottom:4px;line-height:1.3;}
+.card .info .cat-label{font-size:0.65rem;color:var(--gold);letter-spacing:2px;text-transform:uppercase;font-weight:500;margin-bottom:8px;}
+.card .info .price{font-size:1.1rem;font-weight:600;color:var(--gold-dark);margin-bottom:12px;font-family:var(--font-display);}
+.card .info .know-btn{width:100%;padding:10px 16px;border:none;border-radius:30px;cursor:pointer;font-family:var(--font-body);font-weight:500;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));transition:0.3s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.card .info .know-btn:hover{transform:scale(1.03);box-shadow:0 6px 20px rgba(166,124,82,0.4);}
+.stats-bar{background:linear-gradient(135deg,var(--dark) 0%,var(--dark2) 100%);padding:50px 60px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;z-index:2;}
+.stat-item{text-align:center;color:#fff;padding:20px;border-right:1px solid rgba(255,255,255,0.08);}
+.stat-item:last-child{border-right:none;}
+.stat-item .num{font-family:var(--font-display);font-size:3.2rem;font-weight:600;color:var(--gold-light);line-height:1;margin-bottom:6px;}
+.stat-item .label{font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.55);}
+#about{background:#fff;}
+.about-container{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
+.about-img-wrap{position:relative;}
+.about-img-wrap img{width:100%;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.12);display:block;}
+.about-img-wrap::before{content:'';position:absolute;top:-16px;left:-16px;right:16px;bottom:16px;border:2px solid rgba(166,124,82,0.3);border-radius:24px;z-index:-1;}
+.about-tag{display:inline-block;font-size:0.65rem;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.about-text h2{font-family:var(--font-display);font-size:2.8rem;font-weight:600;color:var(--dark);line-height:1.2;margin-bottom:22px;}
+.about-text p{font-size:0.95rem;line-height:1.85;color:var(--text-light);margin-bottom:16px;}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;}
+.about-feat{display:flex;align-items:center;gap:10px;font-size:0.82rem;color:var(--text);font-weight:500;}
+.about-feat i{color:var(--gold);font-size:1rem;}
+.contact-container{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:start;}
+.contact-info h3{font-family:var(--font-display);font-size:2.2rem;font-weight:600;color:var(--dark);margin-bottom:24px;line-height:1.2;}
+.contact-detail{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid rgba(166,124,82,0.1);font-size:0.9rem;color:var(--text);}
+.contact-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.9rem;flex-shrink:0;box-shadow:0 4px 14px rgba(166,124,82,0.3);}
+.social-icons{display:flex;gap:12px;margin-top:28px;}
+.social-icons a{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#fff;color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,0.08);transition:0.3s;font-size:1rem;text-decoration:none;border:1px solid rgba(166,124,82,0.12);}
+.social-icons a:hover{background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:#fff;transform:translateY(-4px) scale(1.1);}
+.form-box{background:#fff;padding:36px;border-radius:24px;box-shadow:0 12px 50px rgba(0,0,0,0.07);border:1px solid rgba(166,124,82,0.08);}
+.form-grid{display:grid;gap:18px;}
+.field{display:flex;flex-direction:column;gap:6px;}
+.field label{font-size:0.72rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light);}
+.field input,.field textarea{padding:13px 16px;border-radius:12px;border:1.5px solid rgba(166,124,82,0.18);outline:none;font-size:0.9rem;font-family:var(--font-body);background:var(--cream);color:var(--dark);transition:0.25s;}
+.field textarea{height:120px;resize:none;}
+.field input:focus,.field textarea:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 4px rgba(166,124,82,0.1);}
+footer{background:var(--dark);color:rgba(255,255,255,0.5);text-align:center;padding:28px;font-size:0.8rem;letter-spacing:1px;position:relative;z-index:2;}
+footer span{color:var(--gold-light);}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--cream2);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+/* ==================== PRODUCT DETAIL MODAL ==================== */
+.pd-overlay{position:fixed;inset:0;z-index:10000;background:rgba(15,10,6,0.85);backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:opacity 0.4s ease,visibility 0.4s ease;overflow-y:auto;display:flex;align-items:flex-start;justify-content:center;padding:30px 16px 60px;}
+.pd-overlay.open{opacity:1;visibility:visible;}
+.pd-modal{background:var(--cream);border-radius:28px;max-width:980px;width:100%;box-shadow:0 40px 120px rgba(0,0,0,0.5);overflow:hidden;transform:translateY(60px) scale(0.96);transition:transform 0.45s cubic-bezier(0.22,1,0.36,1);position:relative;border:1px solid rgba(166,124,82,0.15);}
+.pd-overlay.open .pd-modal{transform:translateY(0) scale(1);}
+.pd-close{position:absolute;top:18px;right:18px;z-index:20;width:44px;height:44px;background:rgba(26,21,18,0.8);border:none;border-radius:50%;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:0.3s;backdrop-filter:blur(6px);}
+.pd-close:hover{background:var(--gold);transform:rotate(90deg);}
+
+/* Hero image zone */
+.pd-hero{position:relative;height:400px;overflow:hidden;background:var(--dark);}
+.pd-hero-img{width:100%;height:100%;object-fit:cover;display:block;}
+.pd-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(15,10,6,0.65) 100%);}
+.pd-hero-badge{position:absolute;bottom:24px;left:32px;z-index:5;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:#fff;background:rgba(166,124,82,0.9);padding:6px 16px;border-radius:20px;backdrop-filter:blur(6px);}
+
+/* Thumbnail strip */
+.pd-thumbs{display:flex;gap:10px;padding:14px 32px;background:#fff;border-bottom:1px solid rgba(166,124,82,0.1);overflow-x:auto;}
+.pd-thumbs::-webkit-scrollbar{height:3px;}
+.pd-thumbs::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+.pd-thumb{width:74px;height:56px;object-fit:cover;border-radius:10px;cursor:pointer;transition:0.25s;flex-shrink:0;border:2.5px solid transparent;opacity:0.6;}
+.pd-thumb.active{border-color:var(--gold);opacity:1;box-shadow:0 4px 14px rgba(166,124,82,0.35);}
+.pd-thumb:hover{opacity:1;}
+
+/* Body 2-col */
+.pd-body{display:grid;grid-template-columns:1.1fr 0.9fr;gap:0;}
+.pd-info{padding:32px 36px 36px;border-right:1px solid rgba(166,124,82,0.1);}
+.pd-cat{font-size:0.65rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}
+.pd-name{font-family:var(--font-display);font-size:2.3rem;font-weight:700;color:var(--dark);line-height:1.15;margin-bottom:12px;}
+.pd-rating{display:flex;align-items:center;gap:8px;margin-bottom:18px;}
+.pd-rating .stars{color:var(--gold);font-size:0.9rem;}
+.pd-rating .count{font-size:0.78rem;color:var(--text-light);}
+.pd-price-row{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid rgba(166,124,82,0.12);}
+.pd-price{font-family:var(--font-display);font-size:2.8rem;font-weight:700;color:var(--gold-dark);line-height:1;}
+.pd-price-note{font-size:0.7rem;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;line-height:1.5;}
+.pd-desc{font-size:0.9rem;line-height:1.88;color:var(--text-light);margin-bottom:22px;}
+.pd-features{display:grid;gap:10px;}
+.pd-feature{display:flex;align-items:center;gap:12px;font-size:0.82rem;color:var(--text);font-weight:400;}
+.pd-feat-icon{width:32px;height:32px;background:linear-gradient(135deg,rgba(166,124,82,0.13),rgba(200,155,109,0.08));border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:0.82rem;flex-shrink:0;}
+
+/* Right side */
+.pd-order{padding:32px 36px 36px;background:#fff;display:flex;flex-direction:column;gap:16px;}
+.pd-order-title{font-family:var(--font-display);font-size:1.55rem;font-weight:600;color:var(--dark);}
+.pd-order-sub{font-size:0.78rem;color:var(--text-light);}
+.pd-highlights{background:var(--cream);border-radius:14px;padding:16px;display:grid;gap:9px;}
+.pd-hl{display:flex;align-items:center;gap:10px;font-size:0.79rem;color:var(--text);font-weight:500;}
+.pd-hl i{color:var(--gold);font-size:0.95rem;width:16px;text-align:center;}
+.pd-btn-wa{width:100%;padding:15px 24px;border:none;border-radius:50px;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:0.84rem;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,#128C7E,#25D366);box-shadow:0 6px 24px rgba(37,211,102,0.35);display:flex;align-items:center;justify-content:center;gap:10px;transition:0.3s;}
+.pd-btn-wa:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(37,211,102,0.45);}
+.pd-btn-call{width:100%;padding:15px 24px;border:2px solid var(--gold);border-radius:50px;cursor:pointer;font-family:var(--font-body);font-weight:600;font-size:0.84rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:transparent;display:flex;align-items:center;justify-content:center;gap:10px;transition:0.3s;}
+.pd-btn-call:hover{background:var(--gold);color:#fff;transform:translateY(-2px);}
+.pd-share{display:flex;align-items:center;gap:12px;padding-top:8px;border-top:1px solid rgba(166,124,82,0.1);}
+.pd-share-label{font-size:0.7rem;color:var(--text-light);letter-spacing:1.5px;text-transform:uppercase;}
+.pd-share-btns{display:flex;gap:8px;}
+.pd-share-btns a{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--cream2);color:var(--gold);font-size:0.9rem;text-decoration:none;transition:0.25s;border:1px solid rgba(166,124,82,0.15);}
+.pd-share-btns a:hover{background:var(--gold);color:#fff;}
+
+/* Related */
+.pd-related{padding:28px 32px 36px;background:var(--cream2);border-top:1px solid rgba(166,124,82,0.08);}
+.pd-related-title{font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--dark);margin-bottom:18px;}
+.pd-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.pd-rc{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 3px 16px rgba(0,0,0,0.07);cursor:pointer;transition:0.3s;border:1px solid rgba(166,124,82,0.07);}
+.pd-rc:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.12);}
+.pd-rc img{width:100%;height:110px;object-fit:cover;display:block;}
+.pd-rc-info{padding:10px 12px 13px;}
+.pd-rc-info h4{font-family:var(--font-display);font-size:0.95rem;font-weight:600;color:var(--dark);margin-bottom:4px;}
+.pd-rc-info .rc-price{font-size:0.82rem;color:var(--gold-dark);font-weight:600;}
+
+@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){
+  nav{padding:16px 24px;}nav ul li a{font-size:0.72rem;padding:6px 10px;}
+  .section{padding:60px 24px;}.grid{grid-template-columns:repeat(2,1fr);}
+  .about-container{grid-template-columns:1fr;gap:40px;}.contact-container{grid-template-columns:1fr;gap:36px;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);padding:36px 24px;}.hero h2{font-size:2.8rem;}
+  .pd-body{grid-template-columns:1fr;}.pd-info{border-right:none;border-bottom:1px solid rgba(166,124,82,0.1);}
+  .pd-related-grid{grid-template-columns:repeat(2,1fr);}.pd-hero{height:260px;}
+}
+@media(max-width:580px){
+  .grid{grid-template-columns:1fr;}.hero h2{font-size:2.2rem;}.nav-brand h1{font-size:1.5rem;}
+  .pd-name{font-size:1.8rem;}.pd-info,.pd-order{padding:22px 20px;}
+  .pd-related{padding:20px;}.pd-related-grid{grid-template-columns:1fr;}
+  .pd-thumbs{padding:10px 20px;}.pd-price{font-size:2.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="particles" id="particles"></div>
+
+<nav>
+  <div class="nav-brand"><h1>FurniLux</h1><span>Luxury Interiors</span></div>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+
+
+<section class="hero">
+  <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1800&q=85')">
+    <div class="hero-content"><div class="hero-badge">✦ Premium Craftsmanship Since 2010 ✦</div><h2>Luxury Living<br>Starts Here</h2><p>Bespoke furniture & interiors crafted for modern elegance</p><a href="#shop" class="btn"><i class="fa-solid fa-sparkles"></i> Explore Collection</a></div>
+  </div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85')">
+    <div class="hero-content"><div class="hero-badge">✦ Elegant Bedroom Collection ✦</div><h2>Peaceful Dreams,<br>Refined Spaces</h2><p>Modern beds and wardrobes designed for tranquil living</p><a href="#shop" class="btn"><i class="fa-solid fa-bed"></i> Explore Beds</a></div>
+  </div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1800&q=85')">
+    <div class="hero-content"><div class="hero-badge">✦ Modular Kitchen Specialists ✦</div><h2>Kitchens That<br>Inspire Cooking</h2><p>Smart modular solutions with flawless finish</p><a href="#shop" class="btn"><i class="fa-solid fa-kitchen-set"></i> View Kitchens</a></div>
+  </div>
+  <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1800&q=85')">
+    <div class="hero-content"><div class="hero-badge">✦ Stunning Ceiling Designs ✦</div><h2>Transform Every<br>Corner & Ceiling</h2><p>Gypsum, PVC and premium ceiling work for stunning interiors</p><a href="#shop" class="btn"><i class="fa-solid fa-star"></i> View Ceilings</a></div>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+</section>
+
+<div class="stats-bar reveal">
+  <div class="stat-item"><div class="num">1200+</div><div class="label">Happy Clients</div></div>
+  <div class="stat-item"><div class="num">50+</div><div class="label">Product Categories</div></div>
+  <div class="stat-item"><div class="num">14</div><div class="label">Years Experience</div></div>
+  <div class="stat-item"><div class="num">100%</div><div class="label">Custom Work</div></div>
+</div>
+
+
+<!-- ================= PREMIUM WALLPAPER SECTION ================= -->
+
+<section class="lux-wallpaper-section">
+
+    <div class="lux-wallpaper-container">
+
+        <!-- LEFT IMAGE -->
+        <div class="lux-wallpaper-main-image">
+
+            <img id="mainWallpaperImage"
+            src="https://raw.githubusercontent.com/adityathakur2106/furniture-/005a558a2cb657c74dca3338dd6a6fe610f28c79/82f3f2ca-436f-401c-849f-a8c688c9e40f.jpg">
+
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="lux-wallpaper-content">
+
+            <span class="lux-tag">✦ CUSTOM WALLPAPER ✦</span>
+
+            <h2>
+                Transform Your Walls Into
+                <span>Luxury Art</span>
+            </h2>
+
+            <p>
+                Premium customized wallpaper collection with modern,
+                floral, luxury, abstract and artistic wall designs.
+                Create your dream interior with elegant wall styling.
+            </p>
+
+            <!-- FEATURES -->
+            <div class="lux-features">
+
+                <div class="lux-feature">
+                    <i class="fa-solid fa-image"></i>
+                    HD Print Quality
+                </div>
+
+                <div class="lux-feature">
+                    <i class="fa-solid fa-shield"></i>
+                    Waterproof Material
+                </div>
+
+                <div class="lux-feature">
+                    <i class="fa-solid fa-palette"></i>
+                    500+ Designs
+                </div>
+
+                <div class="lux-feature">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    Fast Installation
+                </div>
+
+            </div>
+
+            <!-- WALLPAPER OPTIONS -->
+            <div class="wallpaper-options">
+
+                <img onclick="changeWallpaper(this)"
+                class="active-wallpaper"
+                src="https://raw.githubusercontent.com/adityathakur2106/furniture-/005a558a2cb657c74dca3338dd6a6fe610f28c79/82f3f2ca-436f-401c-849f-a8c688c9e40f.jpg">
+
+                <img onclick="changeWallpaper(this)"
+                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&q=80">
+
+                <img onclick="changeWallpaper(this)"
+                src="https://images.unsplash.com/photo-1560448075-bb485b067938?auto=format&fit=crop&w=900&q=80">
+
+                <img onclick="changeWallpaper(this)"
+                src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80">
+
+                <img onclick="changeWallpaper(this)"
+                src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80">
+
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="lux-buttons">
+
+                <a href="wallpaper.html" class="lux-btn">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    Explore Collection
+                </a>
+
+                <a href="https://wa.me/919307754154" class="lux-btn-outline">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    WhatsApp
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= CSS ================= -->
+
+<style>
+
+.lux-wallpaper-section{
+    padding:100px 60px;
+    background:#f8f5f0;
+}
+
+.lux-wallpaper-container{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.lux-wallpaper-main-image{
+    position:relative;
+}
+
+.lux-wallpaper-main-image img{
+    width:100%;
+    height:650px;
+    object-fit:cover;
+    border-radius:30px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.12);
+    transition:0.4s;
+}
+
+.lux-wallpaper-content h2{
+    font-size:4rem;
+    line-height:1.1;
+    margin:20px 0;
+    color:#1a1512;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.lux-wallpaper-content h2 span{
+    color:#b88a5a;
+}
+
+.lux-tag{
+    font-size:0.75rem;
+    letter-spacing:4px;
+    color:#b88a5a;
+    font-weight:600;
+}
+
+.lux-wallpaper-content p{
+    font-size:1rem;
+    line-height:1.9;
+    color:#6f6257;
+    margin-bottom:35px;
+}
+
+.lux-features{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-bottom:35px;
+}
+
+.lux-feature{
+    background:white;
+    padding:18px;
+    border-radius:16px;
+    font-size:0.95rem;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+.lux-feature i{
+    color:#b88a5a;
+    font-size:1.1rem;
+}
+
+.wallpaper-options{
+    display:flex;
+    gap:15px;
+    margin-bottom:35px;
+    flex-wrap:wrap;
+}
+
+.wallpaper-options img{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:16px;
+    cursor:pointer;
+    border:3px solid transparent;
+    transition:0.3s;
+}
+
+.wallpaper-options img:hover{
+    transform:translateY(-5px);
+}
+
+.active-wallpaper{
+    border:3px solid #b88a5a !important;
+}
+
+.lux-buttons{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.lux-btn{
+    background:linear-gradient(135deg,#8a623c,#c49a6c);
+    color:white;
+    padding:16px 34px;
+    border-radius:50px;
+    text-decoration:none;
+    font-size:0.82rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.lux-btn:hover{
+    transform:translateY(-4px);
+}
+
+.lux-btn-outline{
+    border:2px solid #b88a5a;
+    color:#b88a5a;
+    padding:16px 34px;
+    border-radius:50px;
+    text-decoration:none;
+    font-size:0.82rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.lux-btn-outline:hover{
+    background:#b88a5a;
+    color:white;
+}
+
+@media(max-width:1000px){
+
+.lux-wallpaper-container{
+    grid-template-columns:1fr;
+}
+
+.lux-wallpaper-content h2{
+    font-size:3rem;
+}
+
+.lux-wallpaper-main-image img{
+    height:500px;
+}
+
+}
+
+@media(max-width:700px){
+
+.lux-wallpaper-section{
+    padding:70px 20px;
+}
+
+.lux-wallpaper-content h2{
+    font-size:2.3rem;
+}
+
+.lux-features{
+    grid-template-columns:1fr;
+}
+
+.wallpaper-options img{
+    width:70px;
+    height:70px;
+}
+
+}
+
+</style>
+
+<!-- ================= JS ================= -->
+
+<script>
+
+function changeWallpaper(element){
+
+    document.getElementById("mainWallpaperImage").src = element.src;
+
+    document.querySelectorAll(".wallpaper-options img")
+    .forEach(img => img.classList.remove("active-wallpaper"));
+
+    element.classList.add("active-wallpaper");
+}
+
+</script>
+
+
+
+
+
+<section class="section" id="shop" style="background:linear-gradient(180deg,var(--cream) 0%,var(--cream2) 100%);">
+  <div class="section-header reveal"><div class="section-tag">✦ Our Products ✦</div><h2>Explore Our <em>Collection</em></h2><div class="divider"></div></div>
+  <div class="cat-tabs reveal" id="catTabs">
+    <button class="cat-tab active" data-cat="all"> All Products</button>
+    <button class="cat-tab" data-cat="home">🏠 Home Decore</button>
+    <button class="cat-tab" data-cat="kitchen">🍳 Kitchen / Modular</button>
+    <button class="cat-tab" data-cat="living">🛋 Hall / Living Room</button>
+    <button class="cat-tab" data-cat="bedroom">🛏 Bedroom</button>
+    <button class="cat-tab" data-cat="entry">🚪 Entry / Interior</button>
+    <button class="cat-tab" data-cat="custom">🪵 Custom Work</button>
+    <button class="cat-tab" data-cat="ceiling">🧱 Ceiling Work</button>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+
+
+
+
+<section class="section" id="about" style="background:#fff;">
+  <div class="about-container reveal">
+    <div class="about-img-wrap"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85" alt="About FurniLux"></div>
+    <div class="about-text">
+      <div class="about-tag">✦ Our Story ✦</div>
+      <h2>Crafting Interiors That Tell Your Story</h2>
+      <p>FurniLux is a Maharashtra-based premium interior and furniture brand, delivering bespoke solutions for homes and offices since 2010. Every piece reflects our commitment to quality, craftsmanship, and satisfaction.</p>
+      <p>From modular kitchens to custom ceiling designs, we handle every corner of your home with precision and passion.</p>
+      <div class="about-features">
+        <div class="about-feat"><i class="fa-solid fa-check-circle"></i> Premium Materials</div>
+        <div class="about-feat"><i class="fa-solid fa-check-circle"></i> Custom Designs</div>
+        <div class="about-feat"><i class="fa-solid fa-check-circle"></i> Expert Craftsmen</div>
+        <div class="about-feat"><i class="fa-solid fa-check-circle"></i> On-Time Delivery</div>
+        <div class="about-feat"><i class="fa-solid fa-check-circle"></i> Warranty Assured</div>
+        <div class="about-feat"><i class="fa-solid fa-check-circle"></i> After-Sales Support</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact" style="background:var(--cream2);">
+  <div class="section-header reveal"><div class="section-tag">✦ Reach Out ✦</div><h2>Let's <em>Connect</em></h2><div class="divider"></div></div>
+  <div class="contact-container reveal">
+    <div class="contact-info">
+      <h3>Visit Us or<br>Get in Touch</h3>
+      <div class="contact-detail"><div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div><span>Maharashtra, India</span></div>
+      <div class="contact-detail"><div class="contact-icon"><i class="fa-solid fa-phone"></i></div><span>+91 93077 54154</span></div>
+      <div class="contact-detail"><div class="contact-icon"><i class="fa-solid fa-envelope"></i></div><span>support@furnilux.com</span></div>
+      <div class="contact-detail"><div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div><span>WhatsApp Inquiries Welcome</span></div>
+      <div class="social-icons">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="form-box">
+      <div class="form-grid">
+        <div class="field"><label>Full Name</label><input id="cname" type="text" placeholder="Your name"></div>
+        <div class="field"><label>Email Address</label><input id="cemail" type="email" placeholder="your@email.com"></div>
+        <div class="field"><label>Phone Number</label><input id="cphone" type="tel" placeholder="+91 00000 00000"></div>
+        <div class="field"><label>Message</label><textarea id="cmessage" placeholder="Tell us about your requirement..."></textarea></div>
+        <button class="btn" id="sendBtn" style="width:100%;justify-content:center;"><i class="fa-brands fa-whatsapp"></i> Send via WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><p>© 2026 <span>FurniLux</span> — All Rights Reserved. Crafted with ❤ in Maharashtra, India</p></footer>
+
+<!-- ============ PRODUCT DETAIL OVERLAY ============ -->
+<div class="pd-overlay" id="pdOverlay">
+  <div class="pd-modal" id="pdModal">
+    <button class="pd-close" id="pdClose"><i class="fa-solid fa-xmark"></i></button>
+    <div class="pd-hero">
+      <img class="pd-hero-img" id="pdHeroImg" src="" alt="">
+      <div class="pd-hero-badge" id="pdHeroBadge"></div>
+    </div>
+    <div class="pd-thumbs" id="pdThumbs"></div>
+    <div class="pd-body">
+      <div class="pd-info">
+        <span class="pd-cat" id="pdCat"></span>
+        <h2 class="pd-name" id="pdName"></h2>
+        <div class="pd-rating"><div class="stars">★★★★★</div><div class="count">(48 reviews) &nbsp;·&nbsp; <span style="color:#4caf50;font-weight:600;">In Stock</span></div></div>
+        <div class="pd-price-row">
+          <div class="pd-price" id="pdPrice"></div>
+          <div class="pd-price-note">Starting Price<br>Custom Quote Available</div>
+        </div>
+        <p class="pd-desc" id="pdDesc"></p>
+        <div class="pd-features" id="pdFeatures"></div>
+      </div>
+      <div class="pd-order">
+        <div><div class="pd-order-title">Ready to Order?</div><div class="pd-order-sub">Get a free quote — we respond within 2 hours.</div></div>
+        <div class="pd-highlights">
+          <div class="pd-hl"><i class="fa-solid fa-truck-fast"></i> Free delivery across Maharashtra</div>
+          <div class="pd-hl"><i class="fa-solid fa-shield-halved"></i> 2-Year Warranty on all products</div>
+          <div class="pd-hl"><i class="fa-solid fa-ruler-combined"></i> Custom sizes & finishes available</div>
+          <div class="pd-hl"><i class="fa-solid fa-rotate-left"></i> Easy returns within 7 days</div>
+          <div class="pd-hl"><i class="fa-solid fa-indian-rupee-sign"></i> EMI & zero-cost financing available</div>
+        </div>
+        <button class="pd-btn-wa" id="pdBtnWa"><i class="fa-brands fa-whatsapp" style="font-size:1.2rem;"></i> Buy Now via WhatsApp</button>
+        <button class="pd-btn-call" onclick="window.location.href='tel:+919307754154'"><i class="fa-solid fa-phone"></i> Call to Enquire</button>
+        <div class="pd-share">
+          <span class="pd-share-label">Share</span>        
+          <div class="pd-share-btns">
+            <a href="#" id="pdShareWa" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" id="pdShareFb" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pd-related">
+      <div class="pd-related-title">You May Also Like</div>
+      <div class="pd-related-grid" id="pdRelated"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PRODUCTS=[
+  {name:'Kitchen Trolley Tandem',cat:'kitchen',catLabel:'Kitchen / Modular',price:'₹12,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/857ae3838cd22633ba4863396af789a2.jpg?raw=true',desc:'A sleek pull-out tandem trolley that maximises kitchen storage efficiency. Features smooth German-made runners, anti-tip locks, and powder-coated steel baskets — perfect for oils, spices, and daily essentials.',features:[{i:'ruler-combined',t:'Available in 150mm, 200mm, 300mm widths'},{i:'layer-group',t:'Multi-tier basket system'},{i:'screwdriver-wrench',t:'Professional installation included'},{i:'palette',t:'Chrome, matte black & white finish options'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/857ae3838cd22633ba4863396af789a2.jpg?raw=true','https://i.pinimg.com/736x/e0/94/51/e09451923f63878dd4bf28a393553ab9.jpg']},
+  {name:'Pantry Unit',cat:'kitchen',catLabel:'Kitchen / Modular',price:'₹18,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/ff960f55-d08e-47d6-9f2f-c06f3e8483fe.png?raw=true',desc:'A full-height modular pantry unit with adjustable shelving, soft-close hinges, and premium laminate finish. Designed to store dry goods, appliances and everything organised and accessible.',features:[{i:'arrows-up-down',t:'Floor-to-ceiling height up to 8 ft'},{i:'box',t:'Pull-out drawers with dovetail joints'},{i:'bolt',t:'Inbuilt power socket option'},{i:'droplet-slash',t:'Moisture-resistant board core'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/3cd9f5b0784928094a3f871a3900ef79.jpg?raw=true','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?auto=format&fit=crop&w=800&q=80']},
+  {name:'Crockery Storage',cat:'kitchen',catLabel:'Kitchen / Modular',price:'₹14,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/86dcf38a-38e4-4f03-abae-ea731f5942ee.png?raw=true',desc:'Display and protect your finest crockery in this purpose-built unit. Features tempered glass-front shutters, warm LED lighting inside, and velvet-lined shelves — a blend of function and elegance.',features:[{i:'glass-water',t:'Tempered glass shutter with LED'},{i:'star',t:'Velvet-lined inner shelves'},{i:'lock',t:'Soft-close hinges & magnetic latches'},{i:'lightbulb',t:'Integrated warm LED lighting'}],imgs:['https://images.unsplash.com/photo-1556909048-f5f565d54e6e?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1614159102682-94a23949d0d6?auto=format&fit=crop&w=800&q=80']},
+  {name:'Sofa Set Without Storage',cat:'living',catLabel:'Hall / Living Room',price:'₹25,000',img:'https://i.pinimg.com/736x/e8/65/79/e865798e71b592f6b7163ac2c5ceb3c7.jpg',desc:'A premium 3+1+1 sofa set with high-density foam cushions, solid wood frame, and fabric upholstery. Crafted for comfort and elegance, transforming any living room into a luxury lounge.',features:[{i:'couch',t:'High-density 40D foam seating'},{i:'tree',t:'Solid kikar wood frame'},{i:'palette',t:'30+ fabric & colour options'},{i:'wrench',t:'Professional assembly included'}],imgs:['https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=800&q=80']},
+  {name:'Sofa Set With Storage',cat:'living',catLabel:'Hall / Living Room',price:'₹32,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/f0694b849bf2f5dc0b4bbe06709dbd316befe48b/81_+Wide+Space-Saving+Sleeper+Sofa+Upholstered+Pull-Out+Sofa+Bed.webp',desc:'A luxurious sofa set with hidden storage base — perfect for bedding, toys, and accessories. Features pneumatic lift mechanism, plush cushions, and premium leatherette or fabric finish.',features:[{i:'box-open',t:'Hydraulic lift storage base'},{i:'expand',t:'Extra-deep 8-inch storage depth'},{i:'couch',t:'Plush back cushions with piping'},{i:'palette',t:'Leatherette & velvet fabric choice'}],imgs:['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80','https://images.woodenstreet.de/image/cache/data/fabric-sofa/Mellisa-fabric-sofa/new-logo/3-seater/honey/1-810x702.jpg','https://cdn.swadeshonline.com/v2/patient-paper-41f385/swad-p/wrkr/products/pictures/item/free/original/DvL84T2Nlr-1.png']},
+  {name:'TV Unit',cat:'living',catLabel:'Hall / Living Room',price:'₹16,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/TV%20Unit.png?raw=true',desc:'A sleek wall-mounted or floor-standing TV unit with cable management, open shelves, and closed cabinets. LED profile lighting adds a premium ambiance to your living room.',features:[{i:'tv',t:'Supports up to 75-inch TV'},{i:'lightbulb',t:'Built-in LED profile lighting'},{i:'plug',t:'Hidden cable management system'},{i:'ruler-combined',t:'Custom width up to 10 feet'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/TV%20Unit.png?raw=true','https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80']},
+  {name:'Ceiling Design',cat:'living',catLabel:'Hall / Living Room',price:'₹28,000',img:'https://i.pinimg.com/736x/33/01/8f/33018f64e797185648431031a13ebf4b.jpg',desc:'Transform your hall ceiling with a bespoke false ceiling design. Choose from cove lighting, multi-level plasterwork, or geometric patterns. Expert team handles complete installation and finishing.',features:[{i:'layer-group',t:'Multi-level & cove designs'},{i:'lightbulb',t:'Integrated cove & spot lighting'},{i:'ruler',t:'Custom design per room dimensions'},{i:'hard-hat',t:'Expert installation by our team'}],imgs:['https://i.pinimg.com/736x/33/01/8f/33018f64e797185648431031a13ebf4b.jpg','https://i.pinimg.com/1200x/73/b2/2e/73b22e113d468e30740784c158470b71.jpg','https://i.pinimg.com/1200x/d5/cf/55/d5cf559a18909c4a9163666cc94d56fd.jpg']},
+  {name:'Tea Table',cat:'living',catLabel:'Hall / Living Room',price:'₹7,500',img:'https://github.com/adityathakur2106/furniture-/blob/main/Tea%20Table.png?raw=true',desc:'A refined centre tea table in solid teak or engineered wood, with tempered glass top, lower shelf storage, and tapered legs. Available in rectangular, circular, and oval shapes.',features:[{i:'border-all',t:'Tempered 8mm glass top'},{i:'layer-group',t:'Lower storage shelf'},{i:'palette',t:'Teak, walnut & white oak finish'},{i:'vector-square',t:'Round, oval, rectangular options'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/Tea%20Table.png?raw=true','https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=800&q=80']},
+  {name:'Partition',cat:'living',catLabel:'Hall / Living Room',price:'₹15,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/modern-wooden-partition-living-room.webp?raw=true',desc:'Divide your space stylishly with custom partition units — wooden slat screens, backlit fluted panels, MS frame partitions, and display shelving partitions. All custom sized to your space.',features:[{i:'grip-lines-vertical',t:'Fluted, slat & jali panel styles'},{i:'lightbulb',t:'Backlit & LED glow option'},{i:'ruler-combined',t:'Floor-to-ceiling or half-height'},{i:'palette',t:'Wood, metal & glass combinations'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/modern-wooden-partition-living-room.webp?raw=true','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Wall Paneling',cat:'living',catLabel:'Hall / Living Room',price:'₹11,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/0a0b30b919502a5caf69b29a77b964b08957422a/sofa-set-without-storage-modern.webp',desc:'Elevate your walls with classic or contemporary wall moulding. Our PU and MDF mouldings are lightweight, easy to install, and available in hundreds of profiles for a magazine-worthy finish.',features:[{i:'draw-polygon',t:'Classic, geometric & floral profiles'},{i:'feather',t:'Lightweight PU & MDF material'},{i:'paint-roller',t:'Paintable & wallpaper-ready'},{i:'ruler',t:'Per square feet pricing available'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/0a0b30b919502a5caf69b29a77b964b08957422a/sofa-set-without-storage-modern.webp','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80']},
+  {name:'Temple (PUJA)',cat:'living',catLabel:'Hall / Living Room',price:'₹20,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/temple-unit-modern-alcove.webp?raw=true',desc:'A majestic living room temple unit with intricate carved columns, shikhara-style arch, marble platform, and warm LED lighting. Crafted from solid teak — a sacred centrepiece for your home.',features:[{i:'om',t:'Shikhara arch & carved columns'},{i:'gem',t:'Italian marble pooja platform'},{i:'lightbulb',t:'Warm LED halo & spotlight'},{i:'tree',t:'Solid teak & plywood construction'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/temple-unit-modern-alcove.webp?raw=true','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80']},
+  {name:'Wall Wardrobe',cat:'bedroom',catLabel:'Bedroom',price:'₹38,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/wardrobe-modern-github-ready.webp?raw=true',desc:'A floor-to-ceiling wall wardrobe with sliding or hinged doors, internal LED lighting, and fully customisable interior — hanging rails, shelves, drawers, and a full-length mirror option.',features:[{i:'arrows-up-down',t:'Floor-to-ceiling, up to 10 ft'},{i:'table-columns',t:'Sliding & 2/3/4-door hinged options'},{i:'lightbulb',t:'Internal LED sensor lighting'},{i:'mirror',t:'Full-length mirror option'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/wardrobe-modern-github-ready.webp?raw=true  ','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80']},
+  {name:'Bed',cat:'bedroom',catLabel:'Bedroom',price:'₹40,000',img:'https://github.com/adityathakur2106/furniture-/blob/main/storage-bed-github-ready.webp?raw=true',desc:'A luxuriously designed platform or box bed with upholstered headboard, solid wood frame, and optional hydraulic storage base. Available in Queen (5×6) and King (6×6.5) sizes.',features:[{i:'bed',t:'Queen & King size options'},{i:'box-open',t:'Hydraulic storage base available'},{i:'couch',t:'Padded & tufted headboard'},{i:'tree',t:'Solid wood or steel frame'}],imgs:['https://github.com/adityathakur2106/furniture-/blob/main/storage-bed-github-ready.webp?raw=true','https://images.unsplash.com/photo-1616628182506-2c0d87a3c1f2?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80']},
+  {name:'Bed Back paneling',cat:'bedroom',catLabel:'Bedroom',price:'₹12,000',img:'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80',desc:'Give your bedroom a five-star hotel look with a wall-to-wall bed back panel — fluted textures, fabric panels, LED strips, and integrated side bedside unit. A total bedroom transformation.',features:[{i:'grip-lines',t:'Fluted, fabric & leather panel options'},{i:'lightbulb',t:'Integrated LED cove & reading light'},{i:'ruler-combined',t:'Full wall width coverage'},{i:'plug',t:'Built-in USB & power points'}],imgs:['https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1616628182506-2c0d87a3c1f2?auto=format&fit=crop&w=800&q=80']},
+  {name:'Side Table',cat:'bedroom',catLabel:'Bedroom',price:'₹5,500',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/a6ad505c09184aa6bb17e7bd97452eee7ce70802/bedside-table-github-ready.webp',desc:'Compact and elegant bedside tables with a soft-close drawer, open shelf, and optional charging port cutout. Pairs perfectly with any bed design in matching finishes.',features:[{i:'box-archive',t:'Full-extension soft-close drawer'},{i:'plug',t:'USB & power port cutout option'},{i:'palette',t:'Matches all FurniLux bed finishes'},{i:'ruler',t:'450mm × 450mm standard size'}],imgs:['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80']},
+  {name:'Dressing Table',cat:'bedroom',catLabel:'Bedroom',price:'₹14,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/81e374005a79fb2184a8d064e4b643e7efcf98e7/dressing-github-ready.webp',desc:'An elegant dressing table with full-length mirror, multiple drawers, and organiser inserts. Available in Hollywood vanity style with LED mirror lighting for a glamourous personal beauty station.',features:[{i:'mirror',t:'Full-length or Hollywood mirror'},{i:'lightbulb',t:'LED backlit mirror option'},{i:'boxes-stacked',t:'Multiple drawer with organiser inserts'},{i:'gem',t:'Acrylic, wood & painted finish options'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/81e374005a79fb2184a8d064e4b643e7efcf98e7/dressing-github-ready.webp','https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80']},
+  {name:'Study Table',cat:'bedroom',catLabel:'Bedroom',price:'₹9,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/3b54f3a0b91ff3946afe6d82ea73b423fce94fcf/kids-room-github-ready.webp',desc:'A well-organised study table with overhead bookshelves, drawer units, and a dedicated monitor stand. Built for focused work and study with ergonomic height and ample workspace.',features:[{i:'book',t:'Overhead bookshelf with shutters'},{i:'desktop',t:'Elevated monitor stand section'},{i:'plug',t:'Built-in power & USB ports'},{i:'ruler',t:'Custom width from 3 to 6 feet'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/3b54f3a0b91ff3946afe6d82ea73b423fce94fcf/kids-room-github-ready.webp','https://images.unsplash.com/photo-1594392175511-30eca83d51c8?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80']},
+  {name:'Bunk Bed',cat:'bedroom',catLabel:'Bedroom',price:'₹28,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/df9eae64f2711ab44aa0d22ad468502eca36a9c8/c54b230e-ad60-46e7-8c51-fcd63c141295.jpg',desc:'A sturdy and fun bunk bed for kids and teens, with safety railings, built-in storage stairs, and optional study table below. Solid wood with smooth rounded edges for child safety.',features:[{i:'shield',t:'Safety guard rails on upper bunk'},{i:'stairs',t:'Storage staircase access'},{i:'child',t:'Child-safe rounded edges'},{i:'ruler',t:'Single & double lower bunk options'}],imgs:['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1616628182506-2c0d87a3c1f2?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80']},
+  {name:'Study Book Storage',cat:'bedroom',catLabel:'Bedroom',price:'₹11,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/9d8093a8aea3d52a93a8eb5b90db341e4a6bb08f/8ff980fd-6bb6-47b8-8bae-67b154fed154.jpg',desc:'A beautifully designed bookshelf unit with open and closed compartments, cable management for devices, and display top. Ideal for bedrooms, study rooms, and home libraries.',features:[{i:'book',t:'Open display & closed storage mix'},{i:'plug',t:'Integrated cable management'},{i:'layer-group',t:'Adjustable shelf heights'},{i:'arrows-up-down',t:'Available in 4, 5, 6-shelf variants'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/9d8093a8aea3d52a93a8eb5b90db341e4a6bb08f/8ff980fd-6bb6-47b8-8bae-67b154fed154.jpg','https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80']},
+  {name:'Safety Door',cat:'entry',catLabel:'Entry / Interior',price:'₹22,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/9d63bac956a6885b3b8ab868d5f9a041d5387b31/c06dcc39-b9e2-4037-931e-7e9f72095ddb.jpg',desc:'A premium steel safety door with 5-point locking mechanism, anti-drill protection, and elegant wood-look PVC finish. Available in single and double-leaf with digital peephole option.',features:[{i:'lock',t:'5-point multi-lock mechanism'},{i:'shield-halved',t:'Anti-drill & anti-pry protection'},{i:'eye',t:'Digital peephole viewer option'},{i:'palette',t:'Wood-grain & matte finish options'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/9d63bac956a6885b3b8ab868d5f9a041d5387b31/c06dcc39-b9e2-4037-931e-7e9f72095ddb.jpg','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Name Plate',cat:'entry',catLabel:'Entry / Interior',price:'₹2,500',img:'https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80',desc:'A custom name plate crafted in brass, acrylic, wood, or stainless steel. Laser-engraved with your family name, house number, and decorative elements with precision.',features:[{i:'signature',t:'Laser engraved custom text'},{i:'palette',t:'Brass, acrylic, wood & steel options'},{i:'star',t:'Decorative motifs & borders'},{i:'bolt',t:'LED backlit option available'}],imgs:['https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80']},
+  {name:'Interior Door Frame',cat:'entry',catLabel:'Entry / Interior',price:'₹8,500',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',desc:'Upgrade ordinary doorways with decorative architrave door frames in teak, MDF, or PU. Clean mitre joints, smooth finishes, and concealed frame design available.',features:[{i:'vector-square',t:'Mitre-jointed architrave profiles'},{i:'tree',t:'Teak, MDF & PU material options'},{i:'door-open',t:'Concealed frame design available'},{i:'paint-brush',t:'Paintable & stain-finish options'}],imgs:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Customize Wallpaper',cat:'custom',catLabel:'Custom Work',price:'₹6,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/005a558a2cb657c74dca3338dd6a6fe610f28c79/82f3f2ca-436f-401c-849f-a8c688c9e40f.jpg',desc:'Turn any photo or artwork into a high-resolution custom printed wallpaper. UV-resistant inks and premium self-adhesive vinyl for seamless installation and long-lasting colour.',features:[{i:'image',t:'Any image printed at full resolution'},{i:'sun',t:'UV-resistant ink for lasting colour'},{i:'layer-group',t:'Peel & stick or paste-the-wall options'},{i:'ruler',t:'Priced per square foot'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/005a558a2cb657c74dca3338dd6a6fe610f28c79/82f3f2ca-436f-401c-849f-a8c688c9e40f.jpg','https://images.unsplash.com/photo-1560448075-bb485b067938?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Ready Stock Wallpaper',cat:'custom',catLabel:'Custom Work',price:'₹3,500',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/0484803964a22df20c43f04e7f23600f08d39b6e/1931c95f-0e09-41e7-b483-94b416b7ecbb.jpg',desc:'Choose from our library of 500+ ready-to-install wallpaper designs — floral, geometric, concrete, marble, wood-grain, and abstract. Quick delivery and professional installation available.',features:[{i:'images',t:'500+ designs in stock'},{i:'truck-fast',t:'Same-day delivery available'},{i:'screwdriver-wrench',t:'Professional installation service'},{i:'arrows-rotate',t:'Easy to remove & replace'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/0484803964a22df20c43f04e7f23600f08d39b6e/1931c95f-0e09-41e7-b483-94b416b7ecbb.jpg','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'UPVC Set',cat:'custom',catLabel:'Custom Work',price:'₹35,000',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80',desc:'Premium UPVC window and door systems with double-glazed glass for superior insulation, soundproofing, and security. German hardware, multi-point locks, and 10-year warranty included.',features:[{i:'snowflake',t:'Double-glazed thermal insulation'},{i:'volume-xmark',t:'Superior soundproofing'},{i:'lock',t:'Multi-point locking system'},{i:'certificate',t:'10-year manufacturer warranty'}],imgs:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80']},
+  {name:'Mattress',cat:'custom',catLabel:'Custom Work',price:'₹8,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/9af131a28aaf210e86bca9719cfad289b37a743a/ff3e6369-110e-4946-8d4c-7548f76eb997.jpg',desc:'Sleep in luxury with our premium orthopaedic and memory foam mattresses. Available in single, queen, and king sizes with varying firmness. Hypoallergenic cover fabric included.',features:[{i:'bed',t:'Orthopaedic & memory foam variants'},{i:'moon',t:'Soft, medium & firm options'},{i:'shield',t:'Hypoallergenic fabric cover'},{i:'certificate',t:'5-year manufacturer warranty'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/9af131a28aaf210e86bca9719cfad289b37a743a/ff3e6369-110e-4946-8d4c-7548f76eb997.jpg','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1616628182506-2c0d87a3c1f2?auto=format&fit=crop&w=800&q=80']},
+  {name:'Curtains',cat:'custom',catLabel:'Custom Work',price:'₹4,500',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/2ec2b20160b8f87fe062129431f34657d3fb773c/fa30c512-85de-4343-a1c6-0664d3b5c4c2.jpg',desc:'Custom-stitched curtains in blackout, sheer, or dual-layer styles. Over 200 fabric options including linen, velvet, polyester, and cotton. Rod, eyelet, and pinch-pleat headings available.',features:[{i:'moon',t:'Blackout & sheer fabric options'},{i:'swatchbook',t:'200+ fabric patterns & textures'},{i:'ruler',t:'Custom sized to your windows'},{i:'screwdriver-wrench',t:'Rod fitting & installation service'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/2ec2b20160b8f87fe062129431f34657d3fb773c/fa30c512-85de-4343-a1c6-0664d3b5c4c2.jpg','https://images.unsplash.com/photo-1560448075-bb485b067938?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80']},
+  {name:'Sofa Fabric',cat:'custom',catLabel:'Custom Work',price:'₹2,800',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/611c6b8e4474e723284d9015d5effe982ab41c20/4cddfc46-ff49-47df-8bcc-3ff5fa5dc2c7.jpg',desc:'Revive your old sofa with premium re-upholstery fabric. Velvet, linen, leatherette, cotton and performance fabric in 150+ colours. All materials are stain-resistant and pet-friendly.',features:[{i:'swatchbook',t:'150+ colour & texture options'},{i:'droplet-slash',t:'Stain-resistant performance fabric'},{i:'paw',t:'Pet-friendly & easy-clean options'},{i:'scissors',t:'Custom cutting & stitching'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/611c6b8e4474e723284d9015d5effe982ab41c20/4cddfc46-ff49-47df-8bcc-3ff5fa5dc2c7.jpg','https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=800&q=80']},
+  {name:'Sofa Foam',cat:'custom',catLabel:'Custom Work',price:'₹1,800',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/f13547f5313d197a85b98ed4f8bbf7c0e373ee41/2bb7285a-00f9-4271-95fb-5e7dc5520b29.jpg',desc:'Replace sagging cushions with high-density re-bonded or memory foam inserts. Cut to exact dimensions for a like-new experience. Available in 3-inch, 4-inch, and 5-inch thicknesses.',features:[{i:'layer-group',t:'HD rebonded & memory foam options'},{i:'ruler',t:'Custom cut to exact cushion size'},{i:'couch',t:'Restores original sofa firmness'},{i:'certificate',t:'High durability, 5+ year lifespan'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/f13547f5313d197a85b98ed4f8bbf7c0e373ee41/2bb7285a-00f9-4271-95fb-5e7dc5520b29.jpg','https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80']},
+  {name:'Acrylic CNC Temple',cat:'custom',catLabel:'Custom Work',price:'₹18,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/40520dfb2c3a94c9ab94beb99cfb78befd0f6232/27697d2a-f316-4938-b0b4-5eba41de5de7.jpg',desc:'A divine home temple crafted with precision CNC-cut acrylic panels featuring intricate floral and religious motifs. LED-backlit for a glowing ethereal effect. Wall-mounted or standing variants.',features:[{i:'om',t:'CNC precision-cut acrylic panels'},{i:'lightbulb',t:'RGB & warm LED backlight glow'},{i:'vector-square',t:'50+ design patterns available'},{i:'ruler',t:'Wall-mount & floor-stand options'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/40520dfb2c3a94c9ab94beb99cfb78befd0f6232/27697d2a-f316-4938-b0b4-5eba41de5de7.jpgx ','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80']},
+  {name:'Wood CNC Cutting Design',cat:'custom',catLabel:'Custom Work',price:'₹9,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/115c247dfc9e867acd96601f84b640088f33d4a8/219ee76f-41d6-4cc7-9df1-56a8ce22c7ab.jpg',desc:'Precision CNC-routed wood panels for partitions, headboards, doors, and feature walls. Any design — geometric, floral, abstract, or custom logos — cut into 12mm or 18mm plywood.',features:[{i:'draw-polygon',t:'Any pattern or logo cut precisely'},{i:'ruler',t:'12mm & 18mm material thickness'},{i:'palette',t:'Natural, stained & painted finishes'},{i:'industry',t:'In-house CNC routing facility'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/115c247dfc9e867acd96601f84b640088f33d4a8/219ee76f-41d6-4cc7-9df1-56a8ce22c7ab.jpg','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'3D Designer Door',cat:'custom',catLabel:'Custom Work',price:'₹26,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/a194e01c626550b08648f5d8be8a35e2f72cd3cf/783d8cf5-d3d4-488f-98bd-11c738375b2d.jpg',desc:'Make a grand entrance with 3D textured designer doors featuring raised geometric or floral patterns. Solid core for durability with PU lacquer finish and premium lever handles.',features:[{i:'cube',t:'3D raised texture pattern options'},{i:'shield',t:'Solid core construction'},{i:'star',t:'PU lacquer long-lasting finish'},{i:'door-open',t:'Flush & panel door designs'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/a194e01c626550b08648f5d8be8a35e2f72cd3cf/783d8cf5-d3d4-488f-98bd-11c738375b2d.jpg','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80']},
+  {name:'Photo Frame Wood Work',cat:'custom',catLabel:'Custom Work',price:'₹4,000',img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80',desc:'Custom handcrafted wooden photo frames in solid wood, MDF, or teak with decorative carvings. Gallery walls, collage frames, single-statement frames, and shadow box displays.',features:[{i:'image',t:'Gallery wall & collage frame sets'},{i:'palette',t:'Natural wood, painted & gilded finish'},{i:'ruler',t:'Any photo size accommodated'},{i:'star',t:'Decorative carved moulding borders'}],imgs:['https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Gypsum Ceiling',cat:'ceiling',catLabel:'Ceiling Work',price:'₹32,000',img:'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',desc:'Classic and modern gypsum false ceilings with smooth finish, cove profiles, and integrated lighting. Moisture-resistant gypsum boards with a seamless plastered look for any room.',features:[{i:'layer-group',t:'Multi-level cove & flat designs'},{i:'lightbulb',t:'Cove & recessed lighting integration'},{i:'droplet-slash',t:'Moisture-resistant gypsum boards'},{i:'hard-hat',t:'Factory-trained installation team'}],imgs:['https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'PVC Ceiling',cat:'ceiling',catLabel:'Ceiling Work',price:'₹24,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/0439f7439d0a0d7a1b0ce4af92a8df0f7d681ddc/5463621e-ec02-4b16-9240-ccd7b71bbc4b.jpg',desc:'Affordable and durable PVC false ceilings with a range of textures and colours. 100% waterproof, termite-proof, and easy to maintain — ideal for kitchens, bathrooms, and balconies.',features:[{i:'droplet',t:'100% waterproof & termite-proof'},{i:'swatchbook',t:'50+ colour & texture options'},{i:'broom',t:'Easy to clean & maintain'},{i:'bolt',t:'Fast 1-2 day installation'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/0439f7439d0a0d7a1b0ce4af92a8df0f7d681ddc/5463621e-ec02-4b16-9240-ccd7b71bbc4b.jpg','https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Premium PVC Ceiling',cat:'ceiling',catLabel:'Ceiling Work',price:'₹45,000',img:'https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80',desc:'Luxury-grade premium PVC ceiling panels with high-gloss, marble-effect, and 3D relief patterns. Integrated LED lighting channels, anti-sag properties, and a 15-year design life.',features:[{i:'gem',t:'High-gloss & 3D relief panel options'},{i:'lightbulb',t:'Integrated LED channel lighting'},{i:'certificate',t:'Anti-sag, 15-year design life'},{i:'star',t:'Marble, wood & metallic textures'}],imgs:['https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80']},
+  {name:'Modular Kitchen Full Set',cat:'kitchen',catLabel:'Kitchen / Modular',price:'₹85,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/efa6f257904524a07a42227eeb2e2752495bdad1/b4dd0ee3-8f43-4de4-836e-87aa246ea3e5.jpg',desc:'Complete modular kitchen package including base units, wall units, loft storage, and centre island option. German fittings, 18mm BWR plywood, soft-close hardware — designed for life.',features:[{i:'kitchen-set',t:'Complete base + wall unit package'},{i:'gear',t:'Hettich / Hafele German hardware'},{i:'shield',t:'18mm BWR plywood construction'},{i:'ruler-combined',t:'3D design planning included'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/efa6f257904524a07a42227eeb2e2752495bdad1/b4dd0ee3-8f43-4de4-836e-87aa246ea3e5.jpg','https://images.unsplash.com/photo-1565183928294-7063f23ce0f8?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?auto=format&fit=crop&w=800&q=80']},
+  {name:'Kitchen Chimney Cabinet',cat:'kitchen',catLabel:'Kitchen / Modular',price:'₹7,500',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/c29985b66a5ee2fb8ce189d46714bdcc768f5b06/b91c18f5-e99b-4e1e-bebc-2272f87783d3.jpg',desc:'A dedicated cabinet surround for kitchen chimneys that conceals the ducting and blends seamlessly with your modular kitchen design. Available in all laminate finishes.',features:[{i:'wind',t:'Concealed ducting design'},{i:'ruler',t:'Fits 60cm & 90cm chimney widths'},{i:'palette',t:'Matches all laminate finishes'},{i:'screwdriver-wrench',t:'Installation with ducting included'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/c29985b66a5ee2fb8ce189d46714bdcc768f5b06/b91c18f5-e99b-4e1e-bebc-2272f87783d3.jpg','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600489000022-c2086d79f9d4?auto=format&fit=crop&w=800&q=80']},
+  {name:'Feature Wall Panel',cat:'living',catLabel:'Hall / Living Room',price:'₹19,000',img:'https://raw.githubusercontent.com/adityathakur2106/furniture-/7eac88bfd7b1621d5f27078e8c9d7d42277e2860/dc13cefb-a842-4283-bf3f-4d2a7df52e09.jpg',desc:'Create a showstopping focal point with a textured feature wall panel — 3D waves, brick patterns, stone cladding, fluted wood, and geometric relief. Perfect behind sofas or beds.',features:[{i:'layer-group',t:'3D wave, flute & stone patterns'},{i:'lightbulb',t:'LED profile lighting option'},{i:'ruler-combined',t:'Full wall or accent panel sizing'},{i:'palette',t:'Natural, painted & metallic finishes'}],imgs:['https://raw.githubusercontent.com/adityathakur2106/furniture-/7eac88bfd7b1621d5f27078e8c9d7d42277e2860/dc13cefb-a842-4283-bf3f-4d2a7df52e09.jpg','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80']},
+  {name:'Premium Bed With Storage',cat:'bedroom',catLabel:'Bedroom',price:'₹52,000',img:'https://images.unsplash.com/photo-1616628182506-2c0d87a3c1f2?auto=format&fit=crop&w=800&q=80',desc:'A king-size statement bed with hydraulic storage base, tall tufted headboard, side reading lights, and USB ports. Hardwood frame and premium leatherette upholstery throughout.',features:[{i:'box-open',t:'Hydraulic base with deep storage'},{i:'couch',t:'Tall button-tufted headboard'},{i:'plug',t:'USB & reading light on headboard'},{i:'gem',t:'Premium leatherette upholstery'}],imgs:['https://images.unsplash.com/photo-1616628182506-2c0d87a3c1f2?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80']},
+  {name:'Bedroom Wardrobe Sliding',cat:'bedroom',catLabel:'Bedroom',price:'₹44,000',img:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80',desc:'Space-saving sliding door wardrobe with mirror-panel doors, soft-close mechanism, and fully modular interior. Available in 4, 5, and 6-door configurations for any bedroom.',features:[{i:'mirror',t:'Mirror, glass & laminate door panels'},{i:'table-columns',t:'4, 5 & 6-door configurations'},{i:'layer-group',t:'Fully modular interior layout'},{i:'volume-off',t:'Whisper-quiet soft-close runners'}],imgs:['https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80']},
+  {name:'Foyer Entry Unit',cat:'entry',catLabel:'Entry / Interior',price:'₹14,000',img:'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',desc:'A complete foyer unit combining a shoe rack, console table, mirror, and key holder. A warm, organised welcome to your home with premium finish and smart storage built in.',features:[{i:'shoe-prints',t:'Hidden shoe storage with ventilation'},{i:'mirror',t:'Full-length or accent mirror'},{i:'key',t:'Built-in key & accessory holder'},{i:'palette',t:'Oak, walnut & white finish options'}],imgs:['https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Wooden Flooring',cat:'custom',catLabel:'Custom Work',price:'₹55,000',img:'https://images.unsplash.com/photo-1562663474-6cbb3eaa4d14?auto=format&fit=crop&w=800&q=80',desc:'Luxury engineered hardwood and laminate flooring with click-lock installation. Oak, walnut, teak, and cherry wood patterns with micro-bevelled edges for a high-end finish.',features:[{i:'tree',t:'Oak, walnut, teak & cherry options'},{i:'lock',t:'Click-lock floating installation'},{i:'droplet-slash',t:'Water-resistant core technology'},{i:'ruler',t:'Priced per square foot'}],imgs:['https://images.unsplash.com/photo-1562663474-6cbb3eaa4d14?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80']},
+  {name:'False Ceiling With Lights',cat:'ceiling',catLabel:'Ceiling Work',price:'₹38,000',img:'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80',desc:'Fully integrated false ceiling with pre-installed LED recessed lights, cove lighting channels, and smart dimmer compatibility. Complete lighting design by our interior specialists.',features:[{i:'lightbulb',t:'LED recessed & cove light package'},{i:'sliders',t:'Smart dimmer & RGB compatibility'},{i:'layer-group',t:'Multi-level design available'},{i:'bolt',t:'Electrician included in package'}],imgs:['https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&w=800&q=80']},
+  {name:'Luxury Dining Table Set',cat:'living',catLabel:'Hall / Living Room',price:'₹48,000',img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80',desc:'A premium 6 or 8-seater dining table in solid teak or marble top with upholstered chairs featuring button-tufted backs. A stunning centrepiece for any dining space.',features:[{i:'utensils',t:'6 & 8-seater configurations'},{i:'gem',t:'Solid teak or marble top options'},{i:'couch',t:'Upholstered button-tufted chairs'},{i:'ruler',t:'Custom size dining tables available'}],imgs:['https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=800&q=80']},
+  {name:'Bathroom Vanity Unit',cat:'entry',catLabel:'Entry / Interior',price:'₹16,000',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=800&q=80',desc:'A sleek bathroom vanity unit with under-sink storage, soft-close drawers, and a mirror cabinet. Waterproof PVC board construction with anti-rust hardware for lasting beauty in wet areas.',features:[{i:'droplet',t:'Waterproof PVC board construction'},{i:'shield',t:'Anti-rust marine-grade hardware'},{i:'mirror',t:'Mirror cabinet with internal storage'},{i:'lightbulb',t:'LED vanity mirror light option'}],imgs:['https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80']},
+];
+
+/* ------- RENDER CARDS ------- */
+function renderProducts(cat='all'){
+  const grid=document.getElementById('productGrid');
+  const list=cat==='all'?PRODUCTS:PRODUCTS.filter(p=>p.cat===cat);
+  grid.innerHTML='';
+  list.forEach(p=>{
+    const idx=PRODUCTS.indexOf(p);
+    const card=document.createElement('div');
+    card.className='card reveal';
+    card.innerHTML=`<div class="card-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy"><div class="card-badge">${p.catLabel}</div><div class="card-overlay"></div><div class="card-shine"></div></div><div class="info"><div class="cat-label">${p.catLabel}</div><h3>${p.name}</h3><div class="price">${p.price}</div><button class="know-btn" onclick="openDetail(${idx})"><i class="fa-solid fa-eye"></i> Know More</button></div>`;
+    grid.appendChild(card);
+  });
+  setTimeout(()=>document.querySelectorAll('.card.reveal').forEach(el=>el.classList.add('visible')),60);
+}
+
+/* ------- DETAIL MODAL ------- */
+function openDetail(idx){
+  const p=PRODUCTS[idx];
+  const overlay=document.getElementById('pdOverlay');
+  // Set data
+  document.getElementById('pdHeroImg').src=p.imgs[0];
+  document.getElementById('pdHeroImg').style.opacity='1';
+  document.getElementById('pdHeroBadge').textContent=p.catLabel;
+  document.getElementById('pdCat').textContent=p.catLabel;
+  document.getElementById('pdName').textContent=p.name;
+  document.getElementById('pdPrice').textContent=p.price;
+  document.getElementById('pdDesc').textContent=p.desc;
+  // Thumbnails
+  const thumbsEl=document.getElementById('pdThumbs');
+  thumbsEl.innerHTML='';
+  p.imgs.forEach((src,i)=>{
+    const img=document.createElement('img');
+    img.className='pd-thumb'+(i===0?' active':'');
+    img.src=src; img.alt=p.name;
+    img.addEventListener('click',()=>{
+      const hero=document.getElementById('pdHeroImg');
+      hero.style.opacity='0';
+      setTimeout(()=>{hero.src=src;hero.style.opacity='1';},220);
+      thumbsEl.querySelectorAll('.pd-thumb').forEach(t=>t.classList.remove('active'));
+      img.classList.add('active');
+    });
+    thumbsEl.appendChild(img);
+  });
+  document.getElementById('pdHeroImg').style.transition='opacity 0.3s';
+  // Features
+  const featEl=document.getElementById('pdFeatures');
+  featEl.innerHTML='';
+  p.features.forEach(f=>{
+    const d=document.createElement('div');
+    d.className='pd-feature';
+    d.innerHTML=`<div class="pd-feat-icon"><i class="fa-solid fa-${f.i}"></i></div><span>${f.t}</span>`;
+    featEl.appendChild(d);
+  });
+  // WA buy button
+  document.getElementById('pdBtnWa').onclick=()=>openWhatsApp(p.name,p.price,p.imgs[0]);
+  // Share
+  const shareText=encodeURIComponent(`Check out ${p.name} - ${p.price} at FurniLux!`);
+  document.getElementById('pdShareWa').href=`https://wa.me/?text=${shareText}`;
+  document.getElementById('pdShareFb').href=`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(p.name)}`;
+  // Related
+  const relEl=document.getElementById('pdRelated');
+  relEl.innerHTML='';
+  PRODUCTS.filter(r=>r.cat===p.cat&&r.name!==p.name).slice(0,3).forEach(r=>{
+    const ridx=PRODUCTS.indexOf(r);
+    const d=document.createElement('div');
+    d.className='pd-rc';
+    d.onclick=()=>openDetail(ridx);
+    d.innerHTML=`<img src="${r.imgs[0]}" alt="${r.name}" loading="lazy"><div class="pd-rc-info"><h4>${r.name}</h4><div class="rc-price">${r.price}</div></div>`;
+    relEl.appendChild(d);
+  });
+  // Open
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+  overlay.scrollTop=0;
+}
+
+function closeDetail(){
+  document.getElementById('pdOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('pdClose').addEventListener('click',closeDetail);
+document.getElementById('pdOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('pdOverlay'))closeDetail();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail();});
+
+/* ------- FILTER TABS ------- */
+document.getElementById('catTabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.cat-tab');
+  if(!btn)return;
+  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(btn.dataset.cat);
+});
+
+/* ------- HERO SLIDER ------- */
+const slides=document.querySelectorAll('.slide');
+const dotsEl=document.getElementById('heroDots');
+let cur=0;
+slides.forEach((_,i)=>{const d=document.createElement('span');if(i===0)d.classList.add('active');d.addEventListener('click',()=>goTo(i));dotsEl.appendChild(d);});
+function goTo(n){slides[cur].classList.remove('active');dotsEl.children[cur].classList.remove('active');cur=n;slides[cur].classList.add('active');dotsEl.children[cur].classList.add('active');}
+setInterval(()=>goTo((cur+1)%slides.length),4500);
+
+/* ------- PARALLAX ------- */
+window.addEventListener('scroll',()=>{const s=window.scrollY;slides.forEach(sl=>{sl.style.backgroundPositionY=s*0.28+'px';});});
+
+/* ------- SCROLL REVEAL ------- */
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.08});
+function observeAll(){document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));}
+
+/* ------- NAV ------- */
+document.querySelectorAll('nav a').forEach(link=>{link.addEventListener('click',e=>{e.preventDefault();const id=link.getAttribute('href');if(id==='#'){window.scrollTo({top:0,behavior:'smooth'});return;}const el=document.querySelector(id);if(el)window.scrollTo({top:el.offsetTop-75,behavior:'smooth'});});});
+
+/* ------- CURSOR ------- */
+const glow=document.getElementById('cursorGlow');
+document.addEventListener('mousemove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px';});
+
+/* ------- PARTICLES ------- */
+const pc=document.getElementById('particles');
+for(let i=0;i<22;i++){const s=document.createElement('span');s.style.left=Math.random()*100+'%';s.style.animationDelay=Math.random()*12+'s';s.style.animationDuration=(10+Math.random()*10)+'s';s.style.width=s.style.height=(3+Math.random()*5)+'px';pc.appendChild(s);}
+
+/* ------- CONTACT ------- */
+document.getElementById('sendBtn').addEventListener('click',()=>{
+  const n=document.getElementById('cname').value.trim();
+  const e=document.getElementById('cemail').value.trim();
+  const p=document.getElementById('cphone').value.trim();
+  const m=document.getElementById('cmessage').value.trim();
+  if(!n||!e||!p||!m){alert('Please fill all fields');return;}
+  const wa=`Hello FurniLux! 👋\n\nName: ${n}\nEmail: ${e}\nPhone: ${p}\nMessage: ${m}`;
+  window.location.href=`https://wa.me/919307754154?text=${encodeURIComponent(wa)}`;
+});
+
+/* ------- WHATSAPP ------- */
+function openWhatsApp(name,price,img){
+  const msg=`🛋️ *FurniLux Inquiry*\n\n*Product:* ${name}\n*Price:* ${price}\n\nI'm interested. Please share:\n✔ More photos\n✔ Available options & colours\n✔ Delivery & installation details\n✔ Best price offer\n\n📷 ${img}\n🔗 ${window.location.href}`;
+  window.location.href=`https://wa.me/919307754154?text=${encodeURIComponent(msg)}`;
+}
+
+/* ------- INIT ------- */
+renderProducts();
+observeAll();
+</script>
+</body>
+</html>
